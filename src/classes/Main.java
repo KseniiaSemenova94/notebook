@@ -11,55 +11,81 @@ public class Main {
     public static void main(String[] args) throws IOException {
         System.out.println("Привет, это блокнот! Пожалуйста, введите имя владельца.");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String owner = reader.readLine();
+        String owner;
+        int ownerLength;
+
+        do {
+           owner = reader.readLine();
+            String replace;
+             if (owner.contains(" ")) {
+                 replace = owner.replace(" ", "");
+                 ownerLength = replace.length();
+             } else
+                 ownerLength = owner.length();
+        } while (ownerLength == 0);
+
         Notebook notebook = new NotebookImpl(owner);
         System.out.println("Рада помочь, " + owner + ". С чего начнём? Выберите номер действия.");
-        int number = 0;
-        while (number != 5) {
-            System.out.println(
-                    "1. Создать новую запись.\n" +
-                            "2. Посмотреть все записи.\n" +
-                            "3. Удалить запись.\n" +
-                            "4. Редактировать запись.\n" +
-                            "5. Завершить работу с программой.\n");
+        System.out.println(
+                "1. Создать новую запись.\n" +
+                        "2. Посмотреть все записи.\n" +
+                        "3. Удалить запись.\n" +
+                        "4. Редактировать запись.\n" +
+                        "5. Завершить работу с программой.\n");
+        Integer option;
+       do {
+           option = readOption();
+           if (option == null || option < 1 || option > 5) {
+               System.out.println("Некорректный номер действия. Ввведите, пожалуйста, число из списка.");
+           }
+       } while (option == null || option < 1 || option > 5);
 
-            number = readNumber();
-            if (number < 1 || number > 5) {
-                System.out.println("Введите число из списка.");
-            } else {
-                if (number == 1) {
-                    System.out.println("Выберите тему записи.\n" +
-                            "1. Идея.\n" +
-                            "2. Мысль.\n" +
-                            "3. Дело.\n" +
-                            "4. Цель.\n" +
-                            "5. Без темы.\n");
-                    number = readNumber();
-                }
-            }
+       while (option != 5) {
+           if (option == 1) {
+               handleAddNote();
+           }
+           if (option ==2) {
+               handleShowAllNotes();
+           }
+           if (option ==3) {
+               handleRemoveNote();
+           }
+           if (option ==4) {
+               handleEditNote();
+           }
+       }
+    }
 
+    private static Integer readOption() throws IOException {
+        Integer option;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            option = Integer.parseInt(reader.readLine());
+        } catch (NumberFormatException e) {
+            return null;
         }
-        String text = "";
+        return option;
+    }
 
+    private static void handleAddNote() {
+        System.out.println("Выберите тему записи.\n" +
+                "1. Идея.\n" +
+                "2. Мысль.\n" +
+                "3. Дело.\n" +
+                "4. Цель.\n" +
+                "5. Без темы.\n");
+//        number = readNumber();
+    }
 
-        while (!text.equals("stop")) {
-            text = reader.readLine();
-            Note note = new NoteImpl("Мысль", "мой день", text);
-            notebook.addNote(note);
-            notebook.showAllNotes();
-        }
-
+    private static void handleShowAllNotes() {
 
     }
 
-    private static int readNumber() throws IOException {
-        int number = 0;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            number = Integer.parseInt(reader.readLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Некорректный номер действия. Ввведите, пожалуйста, число.");
-        }
-        return number;
+    private static void handleRemoveNote() {
+
+    }
+
+    private static void handleEditNote() {
+
     }
 }
