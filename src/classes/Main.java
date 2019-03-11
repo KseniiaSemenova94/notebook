@@ -26,34 +26,35 @@ public class Main {
 
         Notebook notebook = new NotebookImpl(owner);
         System.out.println("Рада помочь, " + owner + ". С чего начнём? Выберите номер действия.");
-        System.out.println(
-                "1. Создать новую запись.\n" +
-                        "2. Посмотреть все записи.\n" +
-                        "3. Удалить запись.\n" +
-                        "4. Редактировать запись.\n" +
-                        "5. Завершить работу с программой.\n");
         Integer option;
+
        do {
+           System.out.println(
+                   "1. Создать новую запись.\n" +
+                           "2. Посмотреть все записи.\n" +
+                           "3. Удалить запись.\n" +
+                           "4. Редактировать запись.\n" +
+                           "5. Завершить работу с программой.\n");
            option = readOption();
            if (option == null || option < 1 || option > 5) {
                System.out.println("Некорректный номер действия. Ввведите, пожалуйста, число из списка.");
+           } else {
+               if (option == 1) {
+                   handleAddNote();
+               }
+               if (option == 2) {
+                   handleShowAllNotes();
+               }
+               if (option == 3) {
+                   handleRemoveNote();
+               }
+               if (option == 4) {
+                   handleEditNote();
+               }
            }
-       } while (option == null || option < 1 || option > 5);
+       } while (option == null || option != 5);
 
-       while (option != 5) {
-           if (option == 1) {
-               handleAddNote();
-           }
-           if (option ==2) {
-               handleShowAllNotes();
-           }
-           if (option ==3) {
-               handleRemoveNote();
-           }
-           if (option ==4) {
-               handleEditNote();
-           }
-       }
+
     }
 
     private static Integer readOption() throws IOException {
