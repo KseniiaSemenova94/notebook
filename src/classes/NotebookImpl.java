@@ -52,6 +52,7 @@ public class NotebookImpl implements Notebook {
         for (int i = 0; i < this.firstEmptyCell; i++) {
             showNote(this.notes[i]);
         }
+        System.out.println();
     }
 
     private void increaseNotebookSize() {
