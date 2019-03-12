@@ -33,12 +33,15 @@ public class NotebookImpl implements Notebook {
 
     @Override
     public boolean removeNote(int noteId) {
+        if ((this.firstEmptyCell <= this.notes.length / 2) && (this.notes.length > 10)) {
+            decreaseNotebookSize();
+        }
         int noteIdIndexToRemove = findNoteIndexById(noteId);
         if (noteIdIndexToRemove == -1) {
             return false;
         }
         System.arraycopy(this.notes, noteIdIndexToRemove + 1,
-                this.notes, noteIdIndexToRemove, firstEmptyCell - 1);
+                this.notes, noteIdIndexToRemove, firstEmptyCell - 3);
         return true;
     }
 
@@ -70,15 +73,22 @@ public class NotebookImpl implements Notebook {
         return -1;
     }
 
-    private void showNote(Note note) {
-        String leftAlignFormat = "| %-4s | %-10s | %-29s | %-18s | %-19s |%n";
-        System.out.format("+------+------------+-------------------------------+--------------------+---------------------+%n");
-        System.out.format("|  ID  |    Type    |              Title            |    Creation Date   |  Last Modified Date |%n");
-        System.out.format("+------+------------+-------------------------------+--------------------+---------------------+%n");
-        System.out.format(leftAlignFormat, note.getId(), note.getName(), note.getType(), note.getCreationDate(), note.getLastModified());
-        System.out.format("+-------------------+-------------------------------+--------------------+---------------------+%n");
-        System.out.println(note.getContent());
-        System.out.format("+-------------------+-------------------------------+--------------------+---------------------+%n");
+    private void decreaseNotebookSize() {
+        Note[] newNote = new Note[(int) (this.notes.length / 1.3)];
+        System.arraycopy(this.notes, 0, newNote, 0, this.firstEmptyCell);
+        this.notes = newNote;
+    }
 
+
+
+    private void showNote(Note note) {
+        String leftAlignFormat = "| %-4s | %-22s | %-75s | %-19s | %-19s |%n";
+        System.out.format("+------+------------------------+-----------------------------------------------------------------------------+---------------------+---------------------+%n");
+        System.out.format("|  ID  |  Type                  |  Title                                                                      |  Creation Date      |  Last Modified Date |%n");
+        System.out.format("+-------------------------------+-----------------------------------------------------------------------------+---------------------+---------------------+%n");
+        System.out.format(leftAlignFormat, note.getId(), note.getType(), note.getName(), note.getCreationDate(), note.getLastModified());
+        System.out.format("+------+------------------------+-----------------------------------------------------------------------------+---------------------+---------------------+%n");
+        System.out.println( " " + note.getContent());
+        System.out.format("+------+------------------------+-----------------------------------------------------------------------------+---------------------+---------------------+%n");
     }
 }

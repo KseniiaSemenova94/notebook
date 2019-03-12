@@ -11,6 +11,7 @@ public class Main {
 
     private static BufferedReader reader = null;
     private static String owner = null;
+    private static Integer option = null;
 
     public static void main(String[] args) throws IOException {
         System.out.println("Привет, это блокнот! Пожалуйста, введите имя владельца.");
@@ -29,7 +30,6 @@ public class Main {
 
         Notebook notebook = new NotebookImpl(owner);
         System.out.println("Рада помочь, " + owner + ". С чего начнём? Выберите номер действия.");
-        Integer option;
 
        do {
            System.out.println(
@@ -49,7 +49,7 @@ public class Main {
                    handleShowAllNotes(notebook);
                }
                if (option == 3) {
-                   handleRemoveNote();
+                   handleRemoveNote(notebook);
                }
                if (option == 4) {
                    handleEditNote();
@@ -85,8 +85,19 @@ public class Main {
 
     }
 
-    private static void handleRemoveNote() {
-
+    private static void handleRemoveNote(Notebook notebook) throws IOException {
+        do {
+            System.out.println("Введите ID записи, которую вы хотите удалить.");
+            option = readOption();
+            if (option == null || option <= 0) {
+                System.out.println("Несуществующий ID. Введите, пожалуйста, число.");
+            } else {
+                if (notebook.removeNote(option)) {
+                    System.out.println("Запись с ID:" + option + " удалена.\n");
+                } else
+                System.out.println("Записи с таким номером ID не существует.\n");
+            }
+        } while (option == null || option <= 0);
     }
 
     private static void handleEditNote() {
