@@ -52,7 +52,7 @@ public class Main {
                    handleRemoveNote(notebook);
                }
                if (option == 4) {
-                   handleEditNote();
+                   handleEditNote(notebook);
                }
            }
        } while (option == null || option != 5);
@@ -100,7 +100,18 @@ public class Main {
         } while (option == null || option <= 0);
     }
 
-    private static void handleEditNote() {
-
+    private static void handleEditNote(Notebook notebook) throws IOException {
+        do {
+            System.out.println("Введите ID записи, в которую вы хотите внести изменения.");
+            option = readOption();
+            if (option == null || option <= 0) {
+                System.out.println("Несуществующий ID. Введите, пожалуйста, число.");
+            } else {
+                if (notebook.removeNote(option)) {
+                    System.out.println("Запись с ID:" + option + " удалена.\n");
+                } else
+                    System.out.println("Записи с таким номером ID не существует.\n");
+            }
+        } while (option == null || option <= 0);
     }
 }

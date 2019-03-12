@@ -41,13 +41,19 @@ public class NotebookImpl implements Notebook {
             return false;
         }
         System.arraycopy(this.notes, noteIdIndexToRemove + 1,
-                this.notes, noteIdIndexToRemove, firstEmptyCell - 3);
+                this.notes, noteIdIndexToRemove, firstEmptyCell - 1);
+        this.notes[firstEmptyCell-1] = null;
+        firstEmptyCell--;
         return true;
     }
 
     @Override
-    public void editNote(int noteId) {
-
+    public boolean editNote(int noteId) {
+        int noteIDToChange = findNoteIndexById(noteId);
+        if (noteIDToChange == -1) {
+            return false;
+        }
+        return true;
     }
 
     @Override

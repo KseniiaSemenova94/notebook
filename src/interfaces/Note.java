@@ -9,4 +9,7 @@ public interface Note {
     String getCreationDate();
     String getLastModified();
     String getName();
+    void setType(String type);
+    void setName(String name);
+    void setContent(String content);
 }
