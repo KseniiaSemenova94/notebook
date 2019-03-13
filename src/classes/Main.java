@@ -88,29 +88,41 @@ public class Main {
     private static void handleRemoveNote(Notebook notebook) throws IOException {
         do {
             System.out.println("Введите ID записи, которую вы хотите удалить.");
+            System.out.println("Нажмите 0, если передумали удалять запись.");
             option = readOption();
-            if (option == null || option <= 0) {
+            if (option != null && option == 0) {
+                break;
+            }
+            if (option == null || option < 0) {
                 System.out.println("Несуществующий ID. Введите, пожалуйста, число.");
             } else {
                 if (notebook.removeNote(option)) {
                     System.out.println("Запись с ID:" + option + " удалена.\n");
-                } else
-                System.out.println("Записи с таким номером ID не существует.\n");
+                } else {
+                    System.out.println("Записи с таким ID не существует.\n");
+                }
             }
         } while (option == null || option <= 0);
     }
 
     private static void handleEditNote(Notebook notebook) throws IOException {
+        System.out.println("Введите новый текст для записи.");
+        String newContent = reader.readLine();
         do {
             System.out.println("Введите ID записи, в которую вы хотите внести изменения.");
+            System.out.println("Нажмите 0, если передумали вносить изменения в запись.");
             option = readOption();
+            if (option != null && option == 0) {
+                break;
+            }
             if (option == null || option <= 0) {
                 System.out.println("Несуществующий ID. Введите, пожалуйста, число.");
             } else {
-                if (notebook.removeNote(option)) {
-                    System.out.println("Запись с ID:" + option + " удалена.\n");
-                } else
+                if (notebook.editNote(option, newContent)) {
+                    System.out.println("Текст записи с ID" + option + " изменен.\n");
+                } else {
                     System.out.println("Записи с таким номером ID не существует.\n");
+                }
             }
         } while (option == null || option <= 0);
     }

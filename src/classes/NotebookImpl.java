@@ -48,11 +48,12 @@ public class NotebookImpl implements Notebook {
     }
 
     @Override
-    public boolean editNote(int noteId) {
+    public boolean editNote(int noteId, String content) {
         int noteIDToChange = findNoteIndexById(noteId);
         if (noteIDToChange == -1) {
             return false;
         }
+        this.notes[noteIDToChange].setContent(content);
         return true;
     }
 

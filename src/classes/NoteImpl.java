@@ -30,10 +30,6 @@ public class NoteImpl implements Note {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getType() {
         return type;
     }
@@ -48,6 +44,7 @@ public class NoteImpl implements Note {
 
     public void setContent(String content) {
         this.content = content;
+        this.lastModified = new Date();
     }
 
     public String getCreationDate() {
@@ -56,10 +53,6 @@ public class NoteImpl implements Note {
 
     public String getLastModified() {
         return this.dateFormat.format(lastModified);
-    }
-
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
     }
 
     public String getName() {
