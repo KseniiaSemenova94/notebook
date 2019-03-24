@@ -1,6 +1,5 @@
 package classes;
 
-import interfaces.Note;
 import interfaces.Notebook;
 
 import java.io.BufferedReader;
@@ -22,8 +21,9 @@ public class Main {
            owner = reader.readLine();
             String replace;
              if (owner.contains(" ")) {
-                 replace = owner.replace(" ", "");
+                 replace = owner.trim();
                  ownerLength = replace.length();
+                 owner = replace;
              } else
                  ownerLength = owner.length();
         } while (ownerLength == 0);
@@ -56,6 +56,7 @@ public class Main {
                }
            }
        } while (option == null || option != 5);
+       reader.close();
     }
 
     private static Integer readOption() throws IOException {
@@ -76,7 +77,7 @@ public class Main {
         System.out.println(owner + ", введите текст записи.");
         String contentName = reader.readLine();
         System.out.println();
-        Note note = new NoteImpl(typeNote, nameNote, contentName);
+        Note note = new Note(typeNote, nameNote, contentName);
         notebook.addNote(note);
     }
 

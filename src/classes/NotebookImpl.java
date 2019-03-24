@@ -1,17 +1,20 @@
 package classes;
 
-import interfaces.Note;
 import interfaces.Notebook;
 
 public class NotebookImpl implements Notebook {
+    private static final int INITIAL_SIZE = 10;
+    private static final double INCREASE_SIZE = 1.5;
+    private static final double DECREASE_SIZE = 1.3;
+
     private Note[] notes;
     private String owner;
     private int firstEmptyCell;
 
+
     public NotebookImpl(String owner) {
         this.owner = owner;
-        this.notes = new Note[10];
-        this.firstEmptyCell = 0;
+        this.notes = new Note[INITIAL_SIZE];
     }
 
     public String getOwner() {
@@ -66,13 +69,13 @@ public class NotebookImpl implements Notebook {
     }
 
     private void increaseNotebookSize() {
-        Note[] newNotes = new Note[(int) (this.notes.length * 1.5 + 1)];
+        Note[] newNotes = new Note[(int) (this.notes.length * INCREASE_SIZE + 1)];
         System.arraycopy(this.notes, 0, newNotes, 0, this.notes.length);
         this.notes = newNotes;
     }
 
     private int findNoteIndexById(int noteId) {
-        for (int i = 0; i < this.notes.length; i++) {
+        for (int i = 0; i < this.firstEmptyCell; i++) {
             if (this.notes[i].getId() == noteId) {
                 return i;
             }
@@ -81,7 +84,7 @@ public class NotebookImpl implements Notebook {
     }
 
     private void decreaseNotebookSize() {
-        Note[] newNote = new Note[(int) (this.notes.length / 1.3)];
+        Note[] newNote = new Note[(int) (this.notes.length / DECREASE_SIZE)];
         System.arraycopy(this.notes, 0, newNote, 0, this.firstEmptyCell);
         this.notes = newNote;
     }

@@ -1,11 +1,9 @@
 package classes;
 
-import interfaces.Note;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class NoteImpl implements Note {
+public class Note {
     private static int noteCounter = 0;
 
     private int id;
@@ -16,7 +14,7 @@ public class NoteImpl implements Note {
     private Date lastModified;
     private SimpleDateFormat dateFormat;
 
-    public NoteImpl(String type, String name, String content) {
+    public Note(String type, String name, String content) {
         this.type = type;
         this.content = content;
         this.creationDate = new Date();
@@ -32,10 +30,6 @@ public class NoteImpl implements Note {
 
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getContent() {
@@ -57,9 +51,5 @@ public class NoteImpl implements Note {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
